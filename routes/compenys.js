@@ -30,9 +30,10 @@ router.get('/:id', async function(req, res) {
 /* create */
 router.post('/', valid, async function(req, res) {
   try {
-    const new_compeny = new Compenys(req.body);
+    const {name, regester_id, city, state, createat, phone} = req.body
+    const new_compeny = new Compenys({name: name.trim(), regester_id:regester_id.trim(), city:city.trim(), state:state.trim(), createat:createat.trim(), phone:phone.trim()});
     await new_compeny.save();
-    res.json({msg:"user add secssfuly"});
+    res.json(new_compeny);
   } catch (error) {
     console.error("ther is some error on create ==>", error);
     return res.status(400).json({msg: "There is some error"});

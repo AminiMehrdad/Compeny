@@ -8,7 +8,7 @@ const CompenySchema = new mongoose.Schema({
     },
     regester_id: {
         type: String,
-        default: -1
+        default: "-1"
     },
     city : {
         type: String,
@@ -33,5 +33,17 @@ const CompenySchema = new mongoose.Schema({
         },
     }
 })
+
+// Pre-save middleware to handle null or empty string
+CompenySchema.pre('save', function (next) {
+    if (this.regester_id === null || this.regester_id === "") {
+        this.regester_id = "-1";
+    }
+    if (!this.createat || this.createat === "" || this.createat === null) {
+        this.createat = Date.now(); // Set to the current date/time if invalid
+    }
+    next();
+});
+git 
 
 module.exports = mongoose.model("Compeny", CompenySchema)
