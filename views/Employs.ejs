@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <title>Eployes</title>
+</head>
+
+<body>
+    <%- include('header'); %>
+    <div class="container mt-4">
+      <h1 class="title fs-5"><%= tragetcompeny.name %></h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Ferst Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">ID Number</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Manger</th>
+                    <th scope="col">Berthday</th>
+                    <th scope="col">Compeny Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <% targetEmploys.map((value, index) => {%>
+                    <tr>
+                        <th scope="row"><%= index+1 %></th>
+                        <td><%= value.ferstyName %></td>
+                        <td><%= value.lastName %></td>
+                        <td><%= value.IDNumber %></td>
+                        <td><%= value.gender %></td>
+                        <td><%= value.isManager %></td>
+                        <td><%= value.berthday %></td> 
+                        <td><%= tragetcompeny %></td> 
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=<%= "#deleat"+`${index+1}` %>>Delete</button>
+                            <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target=<%= "#update"+`${index+1}` %>>Update</button>
+                        </td>
+                    </tr>    
+               <% }) %>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Add Employs</button>
+
+    </div>
+
+
+
+   <!-- Modal Create-->
+    <div class="modal fade" id="create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="createLabel">Create Employ</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                      <label for="nameInput" class="form-label">*Ferst Name</label>
+                      <input type="text" class="form-control" id="nameInput" name="name">
+                    </div>
+                    <div class="mb-3">
+                      <label for="regesterInpu" class="form-label">*Last Name</label>
+                      <input type="text" class="form-control" id="regesterInpu" name="regester_id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cityInpu" class="form-label">*ID Number</label>
+                        <input type="text" class="form-control" id="cityInpu" name="city">
+                    </div>
+                    <div class="mb-3">
+                      <label for="stateInpu" class="form-label">Gender</label>
+                      <select class="form-select" id="stateInpu" aria-label="Default select example">
+                        <option value="male" selected>Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                      </div>
+                      <div class="mb-3">
+                        <label for="createInpu" class="form-label">Is Manger</label>
+                        <select class="form-select" id="createInpu" aria-label="Default select example">
+                          <option value="false" selected>false</option>
+                          <option value="true">true</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label for="phoneInpu" class="form-label">*Berthday</label>
+                        <input type="date" class="form-control" id="phoneInpu" name="phone">
+                      </div>
+                      <div class="mb-3">
+                        <label for="CompenyName" class="form-label">*Compeny Name</label>
+                        <input type="text" class="form-control" id="CompenyName" name="phone" value=<%= tragetcompeny.name %> disabled>
+                        <input type="text" class="form-control d-none" id="ID_Compeny" name="phone" value=<%= tragetcompeny.id %> disabled>
+                      </div>
+                  </form>
+            </div>
+            <div class="alert alert-danger mx-3 d-none" role="alert" id="Alert">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary"  onclick="SubminForm()">Create</button>
+            </div>        
+          </div>
+          
+        </div>
+    </div>
+
+    <!-- Modal Deleat-->
+    <% targetEmploys.map((value, index) => {%> 
+    <div class="modal fade" id=<%= "deleat"+`${index+1}` %> tabindex="-1" aria-labelledby="deleatLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleatLabel">Deleat Employ</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <P>
+              are you shore to deleat <b><%= value.ferstyName></b> <b><%= value.lastName%></b> from data set?
+            </P>
+            <input type="text" class="d-none" value=<%= value._id %> id="user">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" onclick="delete_compeny()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+
+    <!-- Modal Update-->
+    <% compenys.map((value, index) => {%> 
+      <div class="modal fade" id=<%= "update"+`${index+1}` %>  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="updateLabel">Update Compeny</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                      <label for="nameInput" class="form-label">*Compeny Name</label>
+                      <input type="text" class="form-control" id="nameInputU" value=<%= value.name%>>
+                    </div>
+                    <div class="mb-3">
+                      <label for="regesterInpu" class="form-label">Regester ID</label>
+                      <input type="text" class="form-control" id="regesterInputU" value=<%= value.regester_id%>>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cityInpu" class="form-label">*City</label>
+                        <input type="text" class="form-control" id="cityInputU" value=<%= value.city%>>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stateInpu" class="form-label">*State</label>
+                      <input type="text" class="form-control" id="stateInputU" value=<%= value.state%>>
+                      </div>
+                      <div class="mb-3">
+                        <label for="createInpu" class="form-label">Date Compeny Create</label>
+                      <input type="date" class="form-control" id="createInputU" value=<%= value.createat%>>
+                      </div>
+                      <div class="mb-3">
+                        <label for="phoneInpu" class="form-label">*Compeny Phone Number</label>
+                        <input type="text" class="form-control" id="phoneInputU" value=<%= value.phone%>>
+                      </div>
+                  </form>
+            </div>
+            <div class="alert alert-danger mx-3 d-none" role="alert" id="AlertU">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-info"  onclick="Update_compeny()">Update</button>
+            </div>        
+          </div>
+          
+        </div>
+      </div>
+      <% }) %>
+    
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="/javascripts/copenyRequest.js"></script>
+</body>
+
+</html>

@@ -44,6 +44,6 @@ CompenySchema.pre('save', function (next) {
     }
     next();
 });
-git 
+ 
 
 module.exports = mongoose.model("Compeny", CompenySchema)

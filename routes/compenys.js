@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async function(req, res) {
   try{
     const compenys = await Compenys.find({});
-    return res.json(compenys);
+    return res.render("Companys", {compenys});
   } catch(error) {
     console.error("there is some error ==>", error)
     return res.status(400).json({msg: "There is some proplem"})
@@ -33,7 +33,7 @@ router.post('/', valid, async function(req, res) {
     const {name, regester_id, city, state, createat, phone} = req.body
     const new_compeny = new Compenys({name: name.trim(), regester_id:regester_id.trim(), city:city.trim(), state:state.trim(), createat:createat.trim(), phone:phone.trim()});
     await new_compeny.save();
-    res.json(new_compeny);
+    res.json({msg: "ok"});
   } catch (error) {
     console.error("ther is some error on create ==>", error);
     return res.status(400).json({msg: "There is some error"});
@@ -46,8 +46,7 @@ router.put('/:id', valid, async function(req, res) {
   try {
     const _id = req.params.id
     await Compenys.findByIdAndUpdate(_id, req.body)
-    const new_company = await Compenys.findById(_id)
-    res.json( new_company);
+    res.json({msg: "ok"});
   }catch(error) {
     console.error("ther is some error on update ==>", error);
     return res.status(400).json({msg: "There is some error"});
@@ -59,7 +58,7 @@ router.delete('/:id',async function(req, res) {
   try{
     const _id = req.params.id
     await Compenys.findByIdAndDelete(_id);
-    res.json({msg:"delete wes secss"});
+    res.json({msg:"ok"});
   }catch(error){
     console.error("ther is some error on delete ==>", error);
     return res.status(400).json({msg: "There is some error"});
