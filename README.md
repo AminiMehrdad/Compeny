@@ -1,6 +1,6 @@
 # Compeny and Employes
 
-### Consider a network consisting of employees and various companies using Mongoose Aggregation. The requirements are as follows:
+### Consider a network consisting of employees and various companies using MongoDB Express.js ejs. The requirements are as follows:
 
 - Perform CRUD operations for companies. The company information includes:
     - Name
