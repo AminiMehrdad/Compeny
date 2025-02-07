@@ -38,7 +38,7 @@
                         <td><%= value.gender %></td>
                         <td><%= value.isManager %></td>
                         <td><%= value.berthday %></td> 
-                        <td><%= tragetcompeny %></td> 
+                        <td><%= tragetcompeny.name %></td> 
                         <td>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=<%= "#deleat"+`${index+1}` %>>Delete</button>
                             <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target=<%= "#update"+`${index+1}` %>>Update</button>
@@ -48,6 +48,7 @@
             </tbody>
         </table>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Add Employs</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="back_page()">Back</button>
 
     </div>
 
@@ -123,7 +124,7 @@
           </div>
           <div class="modal-body">
             <P>
-              are you shore to deleat <b><%= value.ferstyName></b> <b><%= value.lastName%></b> from data set?
+              are you shore to deleat <b><%= value.ferstyName %></b> <b><%= value.lastName %></b> from data set?
             </P>
             <input type="text" class="d-none" value=<%= value._id %> id="user">
           </div>
@@ -137,7 +138,7 @@
     <% }) %>
 
     <!-- Modal Update-->
-    <% compenys.map((value, index) => {%> 
+    <% targetEmploys.map((value, index) => {%> 
       <div class="modal fade" id=<%= "update"+`${index+1}` %>  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -146,38 +147,66 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                      <label for="nameInput" class="form-label">*Compeny Name</label>
-                      <input type="text" class="form-control" id="nameInputU" value=<%= value.name%>>
-                    </div>
-                    <div class="mb-3">
-                      <label for="regesterInpu" class="form-label">Regester ID</label>
-                      <input type="text" class="form-control" id="regesterInputU" value=<%= value.regester_id%>>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cityInpu" class="form-label">*City</label>
-                        <input type="text" class="form-control" id="cityInputU" value=<%= value.city%>>
-                    </div>
-                    <div class="mb-3">
-                        <label for="stateInpu" class="form-label">*State</label>
-                      <input type="text" class="form-control" id="stateInputU" value=<%= value.state%>>
-                      </div>
-                      <div class="mb-3">
-                        <label for="createInpu" class="form-label">Date Compeny Create</label>
-                      <input type="date" class="form-control" id="createInputU" value=<%= value.createat%>>
-                      </div>
-                      <div class="mb-3">
-                        <label for="phoneInpu" class="form-label">*Compeny Phone Number</label>
-                        <input type="text" class="form-control" id="phoneInputU" value=<%= value.phone%>>
-                      </div>
-                  </form>
+              <form>
+                <div class="mb-3">
+                  <label for="nameInputU" class="form-label">*Ferst Name</label>
+                  <input type="text" class="form-control" id="nameInputU" name="name" value=<%= value.ferstyName%>>
+                </div>
+                <div class="mb-3">
+                  <label for="regesterInputU" class="form-label">*Last Name</label>
+                  <input type="text" class="form-control" id="regesterInputU" name="regester_id" value=<%= value.lastName%>>
+                </div>
+                <div class="mb-3">
+                    <label for="cityInputU" class="form-label">*ID Number</label>
+                    <input type="text" class="form-control" id="cityInputU" name="city" value=<%= value.IDNumber%>>
+                </div>
+                <div class="mb-3">
+                  <label for="stateInputU" class="form-label">Gender</label>
+                  <select class="form-select" id="stateInputU" aria-label="Default select example">
+                    <% if (value.gender === "male") { %>
+                      <option value="male" selected>Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                   <% } else if (value.gender === "female") { %> 
+                      <option value="male">Male</option>
+                      <option value="female" selected>Female</option>
+                      <option value="other">Other</option>
+                    <% } else { %>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other" selected>Other</option>
+                    <% } %>
+                    
+                  </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="createInputU" class="form-label">Is Manger</label>
+                    <select class="form-select" id="createInputU" aria-label="Default select example">
+                      <% if (value.gender === "true") { %>
+                        <option value="true" selected>True</option>
+                        <option value="false">False</option>
+                      <% } else { %>
+                        <option value="true">True</option>
+                        <option value="false" selected>False</option>
+                      <% } %>                   
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="phoneInputU" class="form-label">*Berthday</label>
+                    <input type="date" class="form-control" id="phoneInputU" name="phone" value=<%= value.berthday %>>
+                  </div>
+                  <div class="mb-3">
+                    <label for="CompenyName" class="form-label">*Compeny Name</label>
+                    <input type="text" class="form-control" id="CompenyName" name="phone" value=<%= tragetcompeny.name %> disabled>
+                    <input type="text" class="form-control d-none" id="ID_CompenyU" name="phone" value=<%= tragetcompeny.id %> disabled>
+                  </div>
+              </form>
             </div>
             <div class="alert alert-danger mx-3 d-none" role="alert" id="AlertU">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-info"  onclick="Update_compeny()">Update</button>
+              <button type="button" class="btn btn-info"  onclick="Update_employ()">Update</button>
             </div>        
           </div>
           
@@ -190,7 +219,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="/javascripts/copenyRequest.js"></script>
+    <script src="/javascripts/EmployesRequest.js"></script>
 </body>
 
 </html>

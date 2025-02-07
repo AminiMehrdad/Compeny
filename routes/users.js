@@ -22,12 +22,14 @@ router.get('/:id', async function(req, res) {
 
 /* create */
 router.post('/', valid, async function(req, res) {
+  console.log(req.body)
   try {
+    console.log(req.body)
     const {ferstyName, lastName, IDNumber, gender, isManager, berthday, companyID} = req.body
     const new_Employ = new Employs({
       ferstyName: ferstyName.trim(),
       lastName:lastName.trim(),
-      IDNumber:IDNumber.trim(),
+      IDNumber:IDNumber,
       gender:gender, 
       isManager:isManager, 
       berthday:berthday,

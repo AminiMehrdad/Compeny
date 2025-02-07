@@ -37,7 +37,7 @@
                         <td><%= value.state %></td>
                         <td><%= value.createat %></td>
                         <td><%= value.phone %></td> 
-                        <td><button type="button" class="btn btn-link">details</button></td>
+                        <td><button type="button" class="btn btn-link"><a href=<%= `http://localhost:5000/users/${value._id}` %>>details</a></button></td>
                         <!-- <a href= "/compenys/"+ value._id >details</a> -->
                         <td>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=<%= "#deleat"+`${index+1}` %>>Delete</button>
